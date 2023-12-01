@@ -12,6 +12,6 @@ ln -s $HOME/dotfiles/.viminfo $HOME/.viminfo
 #zsh
 ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k
 ln -s $HOME/dotfiles/.oh-my-zsh $HOME/.oh-my-zsh
 ln -s $HOME/dotfiles/.p10k.zsh $HOME/.p10k.zsh
