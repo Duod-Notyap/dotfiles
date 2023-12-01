@@ -2,10 +2,14 @@
 
 ln -s ~/dotfiles/.bashrc ~/.bashrc
 ln -s ~/dotfiles/.config ~/.config
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.tmux ~/.tmux
+#tmux
+mkdir -p ~/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm # install tpm
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/.oh-my-zsh ~/.oh-my-zsh
+#vim
 ln -s ~/dotfiles/.vim ~/.vim
 ln -s ~/dotfiles/.viminfo ~/.viminfo
+#zsh
+ln -s ~/dotfiles/.zshrc ~/.zshrc
+ln -s ~/dotfiles/.oh-my-zsh ~/.oh-my-zsh
 ln -s ~/dotfiles/.p10k.zsh ~/.p10k.zsh
