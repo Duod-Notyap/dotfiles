@@ -1,3 +1,3 @@
-require("pdoud")
-require("pdoud.remap")
-require("pdoud.packer")
+require("core")
+require("core.remap")
+require("core.packer")
