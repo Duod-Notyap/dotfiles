@@ -19,6 +19,10 @@ return require('packer').startup(function(use)
     use 'hrsh7th/vim-vsnip-integ'
     use 'hrsh7th/nvim-cmp'
 
+    use "loctvl842/monokai-pro.nvim"
+
+    use 'tpope/vim-surround'
+
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.4',
         -- or                            , branch = '0.1.x',
@@ -31,4 +35,12 @@ return require('packer').startup(function(use)
             'nvim-tree/nvim-web-devicons', -- optional
         },
     }   
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
 end)
