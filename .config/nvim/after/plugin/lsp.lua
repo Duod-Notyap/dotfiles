@@ -11,5 +11,16 @@ config.tsserver.setup({
     capabilities = capabilities
 })
 
+config.rust_analyzer.setup({
+    capabilities = capabilities,
+    settings = {
+        ['rust-analyzer'] = {
+            diagnostics = {
+                enable = true
+            }
+        }
+    }
+})
+
 vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
 vim.keymap.set("n", "<leader>si", vim.lsp.buf.hover);
