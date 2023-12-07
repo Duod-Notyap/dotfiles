@@ -111,3 +111,6 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 PATH=~/.local/bin:$PATH
 alias v=nvim
+alias nv=nvim
+alias vim=nvim
+alias t=tmux
