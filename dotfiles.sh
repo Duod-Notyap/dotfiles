@@ -51,10 +51,17 @@ fi
 
 
 setup_tmux
-if [ $? -eq 1 ]
+if [ $? -eq 2 ]
     echo "Failed to clone $TMUX_TPM_GIT"
     exit 1
-if [ $? -ne 0 ]
+elif [ $? -eq 1 ]
+    echo -n "~/.tmux.conf already exists. Overwrite? [y/N]: "
+    read overwriteTmuxConf
+    if [ $overwriteTmuxConf -eq "y" ] || [ $overwriteTmuxConf -eq "Y" ]
+        rm $HOME/.tmux.conf
+        ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
+    fi
+elif [ $? -ne 0 ]
     echo -n "tmux setup failed. retry? [y/N]: "
     read retryTmux
     if [ $retryTmux -ne "y" ] && [ $retryTmux -ne "Y" ]
