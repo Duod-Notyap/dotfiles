@@ -1,102 +1,124 @@
 #!/bin/bash
 
 TMUX_TPM_GIT=https://github.com/tmux-plugins/tpm
+NEOVIM_GIT=https://github.com/neovim/neovim
+NEOVIM_BRANCH=stable
+NEOVIM_PACKER_GIT=https://github.com/wbthomason/packer.nvim
+NEOVIM_PACKER_INSTALL=$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
+OMZ_INSTALL_SH=https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+P10K_GIT=https://github.com/romkatv/powerlevel10k.git
+P10K_INSTALL=$HOME/.oh-my-zsh/custom/themes/powerlevel10k
 
-if [ $EUID -ne 0 ]
-    echo "Script must be run as root"
-    exit 1
-fi
 
-setup_bash {
-    ln -s $HOME/dotfiles/.bashrc $HOME/.bashrc
-    # Im no bash expert... Is this required? or is $? propagated outside of scope
-    if [ $? -ne 0 ]
-        return 1
+NVIM_BUILD_DIR="./nvim-build"
+DOTFILES_DIR=$(pwd)
+
+ln_ask () {
+    if [ -f $2 ] || [ -d $2 ]
+    then
+        echo -n "$2 already exists. Overwrite? [y/N]: "
+        read ln_ow
+
+        if [ ! "$ln_ow" == "y" ] && [ ! "$ln_ow" == "Y" ]
+        then
+            return 0
+        fi
+        rm -rf $2
     fi
+
+    ln -s $1 $2
+}
+
+setup_bash () {
+    ln_ask $DOTFILES_DIR/.bashrc $HOME/.bashrc
     return 0
 }
 
 
-setup_tmux {
+setup_tmux () {
     echo "Installing tmux..."
-    #tmux
-    apt install tmux -y
+    sudo apt install tmux -y
     mkdir -p $HOME/.tmux/plugins
     echo "Installing tmux tpm..."
+
+    if [ -d $HOME/.tmux/plugins/tpm ]
+    then
+        echo -n "TPM seems to already be installed... Reinstall?: [y/N]: "
+        read reinstallTpm
+
+        if [ "$reinstallTpm" == "y" ] || [ "$reinstallTpm" == "Y" ]
+        then
+            rm -rf $HOME/.tmux/plugins/tpm
+        else
+            return 0
+        fi	    
+    fi
+
     git clone $TMUX_TPM_GIT $HOME/.tmux/plugins/tpm # install tpm
-    if [ $? -ne 0 ]
-        return 2
-    fi
-    ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
-    if [ $? -ne 0 ]
-        return 1
-    fi
+    ln_ask $DOTFILES_DIR/.tmux.conf $HOME/.tmux.conf
     return 0
 }
 
+setup_nvim () {
+    sudo apt install ninja-build git gettext cmake unzip curl -y
+
+    if [ -d ./nvim-build ]
+    then
+        cd nvim-build
+        git checkout $NEOVIM_BRANCH
+        git pull
+    else
+        git clone $NEOVIM_GIT $DOTFILES_DIR/nvim-build
+        cd nvim-build
+        git checkout $NEOVIM_BRANCH
+    fi
+
+
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    sudo make install
+    
+    cd ..
+    
+    git clone --depth 1 $NEOVIM_PACKER_GIT 
+    ln_ask $DOTFILES_DIR/.vim $HOME/.vim
+    ln_ask $DOTFILES_DIR/.viminfo $HOME/.viminfo
+    ln_ask $DOTFILES_DIR/.config/nvim $HOME/.config/nvim
+}
+
+setup_zsh () {
+    sudo apt install zsh -y
+    ln_ask $DOTFILES_DIR/.zshrc $HOME/.zshrc
+    sh -c "$(curl -fsSL $OMZ_INSTALL_SH)"
+    install_p10k
+    ln_ask $DOTFILES_DIR/.p10k.zsh $HOME/.p10k.zsh
+}
+
+install_p10k () {
+    if [ -d $P10K_INSTALL ]
+    then
+        echo -n "P10K already installed. Reinstall? [y/N]: "
+        read reinstallP10k
+
+        if [ "$reinstallP10k" == "y" ] || [ "$reinstallP10k" == "Y" ]
+        then
+            rm -rf $P10K_INSTALL
+        else
+            return 0
+        fi
+    fi
+    git clone --depth=1 $P10K_GIT $P10K_INSTALL
+}
+
+setup_rustup () {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    mkdir -p ~/.local/bin
+    curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+    chmod +x ~/.local/bin/rust-analyzer
+}
 
 
 setup_bash
-if [ $? -eq 1 ]
-    echo -n "~/.bashrc already exists. Overwrite? [y/N]: "
-    read overwriteBashrc
-    if [ $overwriteBashrc -eq "y" ]
-        setup_bash
-        if [ $? -ne 0]
-            echo "bash setup failed"
-            exit 1
-        fi
-    fi
-fi
-
-
 setup_tmux
-if [ $? -eq 2 ]
-    echo "Failed to clone $TMUX_TPM_GIT"
-    exit 1
-elif [ $? -eq 1 ]
-    echo -n "~/.tmux.conf already exists. Overwrite? [y/N]: "
-    read overwriteTmuxConf
-    if [ $overwriteTmuxConf -eq "y" ] || [ $overwriteTmuxConf -eq "Y" ]
-        rm $HOME/.tmux.conf
-        ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
-    fi
-elif [ $? -ne 0 ]
-    echo -n "tmux setup failed. retry? [y/N]: "
-    read retryTmux
-    if [ $retryTmux -ne "y" ] && [ $retryTmux -ne "Y" ]
-        setup_tmux
-        if [ $? -ne 0 ]
-            echo "tmux setup failed. Aborting..."
-            exit 1
-        fi
-    fi
-    exit 1
-fi
-
-
-#nvim
-apt install ninja-build git gettext cmake unzip curl -y
-git clone https://github.com/neovim/neovim
-cd neovim
-git checkout stable
-make CMAKE_BUILD_TYPE=RelWithDebInfo
-make install
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-ln -s $HOME/dotfiles/.vim $HOME/.vim
-ln -s $HOME/dotfiles/.viminfo $HOME/.viminfo
-ln -s $HOME/dotfiles/.config/nvim $HOME/.config/nvim
-
-#zsh
-apt install zsh -y
-ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k
-ln -s $HOME/dotfiles/.oh-my-zsh $HOME/.oh-my-zsh
-ln -s $HOME/dotfiles/.p10k.zsh $HOME/.p10k.zsh
-
-#rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-mkdir -p ~/.local/bin
-curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
-chmod +x ~/.local/bin/rust-analyzer
+setup_nvim
+setup_zsh
+setup_rustup
