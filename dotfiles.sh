@@ -88,8 +88,8 @@ setup_nvim () {
 
 setup_zsh () {
     sudo apt install zsh -y
-    ln_ask $DOTFILES_DIR/.zshrc $HOME/.zshrc
     sh -c "$(curl -fsSL $OMZ_INSTALL_SH)"
+    ln_ask $DOTFILES_DIR/.zshrc $HOME/.zshrc
     install_p10k
     ln_ask $DOTFILES_DIR/.p10k.zsh $HOME/.p10k.zsh
 }
