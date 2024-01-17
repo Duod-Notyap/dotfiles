@@ -79,9 +79,10 @@ setup_nvim () {
     
     cd ..
     
-    git clone --depth 1 $NEOVIM_PACKER_GIT 
+    git clone --depth 1 $NEOVIM_PACKER_GIT $NEOVIM_PACKER_INSTALL
     ln_ask $DOTFILES_DIR/.vim $HOME/.vim
     ln_ask $DOTFILES_DIR/.viminfo $HOME/.viminfo
+    mkdir -p $HOME/.config
     ln_ask $DOTFILES_DIR/.config/nvim $HOME/.config/nvim
 }
 
