@@ -22,5 +22,10 @@ config.rust_analyzer.setup({
     }
 })
 
+config.pylsp.setup({
+    capabilities = capabilities
+})
 vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
 vim.keymap.set("n", "<leader>si", vim.lsp.buf.hover);
+vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
+vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float);

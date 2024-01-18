@@ -11,6 +11,16 @@ return require('packer').startup(function(use)
 
     use 'neovim/nvim-lspconfig'
 
+    use {
+        "L3MON4D3/LuaSnip",
+        tag = "v2.*", 
+        run = "make install_jsregexp"
+    }
+
+
+    use 'mbbill/undotree'
+    use 'easymotion/vim-easymotion'
+    use "rafamadriz/friendly-snippets"
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
@@ -18,6 +28,7 @@ return require('packer').startup(function(use)
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
     use 'hrsh7th/nvim-cmp'
+    use { 'saadparwaiz1/cmp_luasnip' }
 
     use "loctvl842/monokai-pro.nvim"
 
@@ -27,6 +38,11 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim', tag = '0.1.4',
         -- or                            , branch = '0.1.x',
         requires = { {'nvim-lua/plenary.nvim'} }
+    }
+
+    use {
+      'kkoomen/vim-doge',
+      run = ':call doge#install()'
     }
 
     use {
