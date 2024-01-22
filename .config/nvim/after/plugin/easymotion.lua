@@ -1,3 +1,5 @@
+vim.g.EasyMotion_smartcase = 1;
+
 vim.keymap.set("n", "/", "<Plug>(easymotion-sn)");
 vim.keymap.set("n", "n", "<Plug>(easymotion-next)");
 vim.keymap.set("n", "N", "<Plug>(easymotion-prev)");

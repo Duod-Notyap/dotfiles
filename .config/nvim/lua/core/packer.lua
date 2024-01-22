@@ -18,6 +18,9 @@ return require('packer').startup(function(use)
     }
 
 
+    use 'folke/neodev.nvim'
+    use 'mfussenegger/nvim-dap'
+    use 'rcarriga/nvim-dap-ui'
     use 'mbbill/undotree'
     use 'easymotion/vim-easymotion'
     use "rafamadriz/friendly-snippets"

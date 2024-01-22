@@ -12,3 +12,13 @@ vim.keymap.set("n", "<leader>tq", ":tabclose<CR>")
 vim.keymap.set("n", "<leader>to", ":tabonly<CR>")
 vim.keymap.set("n", "<leader>te", "<C-W>T") --Extrapolate
 
+--Buffer resizing
+vim.keymap.set("n", "<Esc><C-l>", "<C-W>>");
+vim.keymap.set("n", "<Esc><C-h>", "<C-W><");
+vim.keymap.set("n", "<Esc><C-j>", "<C-W>-");
+vim.keymap.set("n", "<Esc><C-k>", "<C-W>+");
+
+vim.keymap.set("n", "<Esc>j", "<C-w>j");
+vim.keymap.set("n", "<Esc>k", "<C-w>k");
+vim.keymap.set("n", "<Esc>l", "<C-w>l");
+vim.keymap.set("n", "<Esc>h", "<C-w>h");
