@@ -1,3 +1,6 @@
+local startup = require("startup")
+startup.setup({ theme = "evil" })
+
 require("monokai-pro").setup {
 
   devicons = true, 
@@ -13,4 +16,4 @@ require("monokai-pro").setup {
   }
 }
 
-vim.cmd("colorscheme monokai-pro-octagon")
+vim.cmd("colorscheme no-clown-fiesta")

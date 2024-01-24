@@ -18,6 +18,8 @@ return require('packer').startup(function(use)
     }
 
 
+    use "aktersnurra/no-clown-fiesta.nvim"
+    use 'water-sucks/darkrose.nvim'
     use 'folke/neodev.nvim'
     use 'mfussenegger/nvim-dap'
     use 'rcarriga/nvim-dap-ui'
@@ -42,6 +44,8 @@ return require('packer').startup(function(use)
         -- or                            , branch = '0.1.x',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
+
+    use "startup-nvim/startup.nvim"
 
     use {
       'kkoomen/vim-doge',
