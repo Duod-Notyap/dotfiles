@@ -3,6 +3,7 @@ local dapui = require("dapui")
 dapui.setup()
 local is_open = false;
 
+
 function toggle_panes()
     is_open = not is_open
     dapui.toggle()
@@ -20,11 +21,14 @@ function open_panes()
     end
 end
 
-function continue(opts)
+function continue()
     if not is_open then
         toggle_panes()
     end
-    dap.continue()
+    local coro = coroutine.create(function()
+        dap.continue()
+    end)
+    coroutine.resume(coro)
 end
 
 function rust_initcommands()
@@ -49,6 +53,7 @@ end
 
 vim.keymap.set("n", "<leader>dt", toggle_panes)
 vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
+vim.keymap.set("n", "<leader>de", dapui.eval)
 vim.keymap.set("n", "<F5>", function (fallback)
     if not is_open then
         toggle_panes()
@@ -59,37 +64,22 @@ vim.keymap.set("n", "<F10>", dap.step_over)
 vim.keymap.set("n", "<F11>", dap.step_into)
 vim.keymap.set("n", "<F17>", function (fallback)
     close_panes()
+    dap.terminate()
     dap.close()
 end)
 
-dap.adapters.cppgdb = {
-    type = "executable",
-    command = "/home/pdoud/cpptools-vscode/extension/debugAdapters/bin/OpenDebugAD7"
-}
+local adapterFiles = { "c" }
 
-dap.configurations.c = {
-    {
-        name = "Launch C (gdb)",
-        type = "cppgdb",
-        request = "launch",
-        program = function()
-            return vim.fn.input('Executable', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = "${workspaceFolder}",
-        stopAtEntry = true
-    }, {
-        name = "Attach to server :1234",
-        type = "cppgdb",
-        request = "launch",
-        MIMode = "gdb",
-        miDebuggerServerAddress = "localhost:1234",
-        miDebuggerPath = "/usr/local/bin/gdb",
-        cwd = "${workspaceFolder}",
-        program = function()
-            return vim.fn.input('Executable', vim.fn.getcwd() .. '/', 'file')
-        end
-    }
-}
+for i,file in ipairs(adapterFiles) do
+    local adapters = require("after.plugin.dap-adapters." .. file)
+    print(file)
+    for k,v in pairs(adapters) do
+        dap.adapters[k] = v
+    end
+end
+--- Check if a file or directory exists in this path
+
+dap.configurations.c = require("after.plugin.dap-configs.c").configs
 
 dap.configurations.cpp = dap.configurations.c
 
@@ -102,7 +92,6 @@ dap.configurations.rust = {
             return vim.fn.input('Executable', vim.fn.getcwd() .. '/', 'file')
         end,
         cwd = "${workspaceFolder}",
-        stopAtEntry = true,
         initCommands = rust_initcommands
     }, {
         name = "Attach to server :1234",

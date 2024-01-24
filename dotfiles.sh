@@ -2,7 +2,7 @@
 
 TMUX_TPM_GIT=https://github.com/tmux-plugins/tpm
 NEOVIM_GIT=https://github.com/neovim/neovim
-NEOVIM_BRANCH=stable
+NEOVIM_BRANCH=master
 NEOVIM_PACKER_GIT=https://github.com/wbthomason/packer.nvim
 NEOVIM_PACKER_INSTALL=$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
 OMZ_INSTALL_SH=https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh

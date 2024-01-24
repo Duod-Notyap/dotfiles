@@ -1,9 +1,10 @@
 local neodev = require("neodev")
+neodev.setup()
+
 local config = require("lspconfig")
 
 local cmpCapabilities = require("cmp_nvim_lsp").default_capabilities()
 
-neodev.setup()
 
 config.clangd.setup({
     cmd = {'clangd-12'},
