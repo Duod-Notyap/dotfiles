@@ -6,17 +6,21 @@ local config = require("lspconfig")
 local cmpCapabilities = require("cmp_nvim_lsp").default_capabilities()
 
 
-config.clangd.setup({
-    cmd = {'clangd-12'},
+config.ccls.setup({
     capabilities = cmpCapabilities
 })
 
+-- config.clangd.setup({
+--     cmd = { "clangd-12" },
+--     capabilities = cmpCapabilities
+-- })
+
 config.tsserver.setup({
-    capabilities = capabilities
+    capabilities = cmpCapabilities
 })
 
 config.rust_analyzer.setup({
-    capabilities = capabilities,
+    capabilities = cmpCapabilities,
     settings = {
         ['rust-analyzer'] = {
             diagnostics = {
@@ -27,11 +31,11 @@ config.rust_analyzer.setup({
 })
 
 config.pylsp.setup({
-    capabilities = capabilities
+    capabilities = cmpCapabilities
 })
 
 config.lua_ls.setup({
-  capabilities = capabilities,
+  capabilities = cmpCapabilities,
   settings = {
     Lua = {
       runtime = {
@@ -45,3 +49,4 @@ vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
 vim.keymap.set("n", "<leader>si", vim.lsp.buf.hover);
 vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
 vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float);
+vim.keymap.set("n", "<leader>df", vim.lsp.buf.code_action);

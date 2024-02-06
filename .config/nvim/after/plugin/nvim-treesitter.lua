@@ -1,3 +1,9 @@
+vim.g['rainbow-delimiters'] = {
+    enable = true,
+    query = 'rainbow-delimiters',
+    strategy = require("rainbow-delimiters").strategy.global
+}
+
 require("nvim-treesitter.configs").setup {
     ensure_installed = { "rust", "cpp", "c", "javascript", "typescript", "lua", "vim", "vimdoc" },
     sync_install = false,
@@ -6,3 +12,4 @@ require("nvim-treesitter.configs").setup {
         enable = true
     }
 }
+

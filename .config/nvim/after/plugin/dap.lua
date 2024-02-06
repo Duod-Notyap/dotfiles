@@ -60,6 +60,14 @@ vim.keymap.set("n", "<F5>", function (fallback)
     end
     continue();
 end)
+vim.keymap.set("n", "<F6>", function (fallback)
+    dap.terminate()
+    dap.close()
+    if not is_open then
+        toggle_panes()
+    end
+    continue();
+end)
 vim.keymap.set("n", "<F10>", dap.step_over)
 vim.keymap.set("n", "<F11>", dap.step_into)
 vim.keymap.set("n", "<F17>", function (fallback)
@@ -72,7 +80,6 @@ local adapterFiles = { "c" }
 
 for i,file in ipairs(adapterFiles) do
     local adapters = require("after.plugin.dap-adapters." .. file)
-    print(file)
     for k,v in pairs(adapters) do
         dap.adapters[k] = v
     end

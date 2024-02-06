@@ -54,6 +54,9 @@ function runCmake(printFn, opts)
         on_stdout = function(_, text)
             printFn(jobId, text)
         end,
+        on_stderr = function(_, text)
+            printFn(jobId, text)
+        end,
         on_exit = function()
             runMake(printFn, opts)
         end
@@ -67,8 +70,14 @@ function runMake(printFn, opts)
         on_stdout = function(_, text)
             printFn(jobId, text)
         end,
-        on_exit = function()
-            runBuilt(opts)
+        on_stderr = function(_, text)
+            printFn(jobId, text)
+        end,
+        on_exit = function(_, code)
+            printFn(jobId, { "Build finished with code " .. code })
+            if code == 0 then
+                runBuilt(opts)
+            end
         end
     });
 end
@@ -80,6 +89,9 @@ function initCBuilddir(printFn)
         jobId = vim.fn.jobstart("mkdir " .. C_BUILDDIR, {
             on_stdout = function(_, text)
                 printFn(jobId, text)
+            end,
+            on_stderr = function(_, text)
+                printFn(jobId, text)
             end
         })
         vim.fn.jobwait({ jobId })
@@ -88,7 +100,7 @@ end
 
 function compileCmake(printFn, opts)
     initCBuilddir(printFn)
-    if not file_exists("Makefile") then
+    if not file_exists("${workspaceFolder}" .. "/" .. C_BUILDDIR .. "/" .. "Makefile") then
         runCmake(printFn, opts)
     else
         runMake(printFn, opts)

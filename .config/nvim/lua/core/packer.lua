@@ -18,7 +18,14 @@ return require('packer').startup(function(use)
     }
 
 
+    use 'alvarocz/vim-northpole'
+    use {
+        'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
+        as = 'rainbow-delimiters.nvim'
+    }
+    use 'vim-airline/vim-airline'
     use "aktersnurra/no-clown-fiesta.nvim"
+    use 'tyrannicaltoucan/vim-deep-space'
     use 'water-sucks/darkrose.nvim'
     use 'folke/neodev.nvim'
     use 'mfussenegger/nvim-dap'

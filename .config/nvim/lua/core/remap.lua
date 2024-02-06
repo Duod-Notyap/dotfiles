@@ -12,13 +12,9 @@ vim.keymap.set("n", "<leader>tq", ":tabclose<CR>")
 vim.keymap.set("n", "<leader>to", ":tabonly<CR>")
 vim.keymap.set("n", "<leader>te", "<C-W>T") --Extrapolate
 
---Buffer resizing
-vim.keymap.set("n", "<Esc><C-l>", "<C-W>>");
-vim.keymap.set("n", "<Esc><C-h>", "<C-W><");
-vim.keymap.set("n", "<Esc><C-j>", "<C-W>-");
-vim.keymap.set("n", "<Esc><C-k>", "<C-W>+");
-
-vim.keymap.set("n", "<Esc>j", "<C-w>j");
-vim.keymap.set("n", "<Esc>k", "<C-w>k");
-vim.keymap.set("n", "<Esc>l", "<C-w>l");
-vim.keymap.set("n", "<Esc>h", "<C-w>h");
+vim.keymap.set("n", "<C-j>", "<C-w>j");
+vim.keymap.set("n", "<C-k>", "<C-w>k");
+vim.keymap.set("n", "<C-l>", "<C-w>l");
+vim.keymap.set("n", "<C-h>", "<C-w>h");
+vim.keymap.set("n", "0", "^");
+vim.keymap.set("n", ")", "<Home>"); -- I dont use sentences or paragraph based motions so idc about losing )
