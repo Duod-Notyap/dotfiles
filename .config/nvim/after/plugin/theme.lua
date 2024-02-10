@@ -3,7 +3,7 @@ startup.setup({ theme = "evil" })
 
 require("monokai-pro").setup {
 
-  devicons = true, 
+  devicons = true,
   styles = {
     comment = { italic = false },
     keyword = { italic = false }, -- any other keyword
@@ -16,4 +16,6 @@ require("monokai-pro").setup {
   }
 }
 
-vim.cmd("colorscheme no-clown-fiesta")
+-- vim.cmd("colorscheme no-clown-fiesta")
+vim.cmd("set termguicolors")
+vim.cmd("colorscheme deep-space")

@@ -175,7 +175,7 @@ return {
             type = "cppgdb",
             request = "launch",
             program = tryCompileC({ args = true }),
-            cwd = "${workspaceFolder}"
+            cwd = "${workspaceFolder"
         }, {
             name = "Attach to server :1234",
             type = "cppgdb",

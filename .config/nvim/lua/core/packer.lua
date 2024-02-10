@@ -41,6 +41,11 @@ return require('packer').startup(function(use)
     use 'hrsh7th/vim-vsnip-integ'
     use 'hrsh7th/nvim-cmp'
     use { 'saadparwaiz1/cmp_luasnip' }
+    use {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        requires = { {"nvim-lua/plenary.nvim"} }
+    }
 
     use "loctvl842/monokai-pro.nvim"
 

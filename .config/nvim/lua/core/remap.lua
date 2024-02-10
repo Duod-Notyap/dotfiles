@@ -18,3 +18,5 @@ vim.keymap.set("n", "<C-l>", "<C-w>l");
 vim.keymap.set("n", "<C-h>", "<C-w>h");
 vim.keymap.set("n", "0", "^");
 vim.keymap.set("n", ")", "<Home>"); -- I dont use sentences or paragraph based motions so idc about losing )
+
+vim.keymap.set("n", "<leader>gb", ":ls<CR>:b");

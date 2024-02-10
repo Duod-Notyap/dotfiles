@@ -6,14 +6,14 @@ local config = require("lspconfig")
 local cmpCapabilities = require("cmp_nvim_lsp").default_capabilities()
 
 
-config.ccls.setup({
-    capabilities = cmpCapabilities
-})
-
--- config.clangd.setup({
---     cmd = { "clangd-12" },
+-- config.ccls.setup({
 --     capabilities = cmpCapabilities
 -- })
+
+config.clangd.setup({
+    cmd = { "clangd-16" },
+    capabilities = cmpCapabilities
+})
 
 config.tsserver.setup({
     capabilities = cmpCapabilities
