@@ -1,8 +1,8 @@
 vim.g.EasyMotion_smartcase = 1;
 
-vim.keymap.set("n", "/", "<Plug>(easymotion-sn)");
-vim.keymap.set("n", "n", "<Plug>(easymotion-next)");
-vim.keymap.set("n", "N", "<Plug>(easymotion-prev)");
+-- vim.keymap.set("n", "/", "<Plug>(easymotion-sn)");
+-- vim.keymap.set("n", "n", "<Plug>(easymotion-next)");
+-- vim.keymap.set("n", "N", "<Plug>(easymotion-prev)");
 vim.keymap.set("n", "<Leader>l", "<Plug>(easymotion-lineforward)");
 vim.keymap.set("n", "<Leader>j", "<Plug>(easymotion-j)");
 vim.keymap.set("n", "<Leader>k", "<Plug>(easymotion-k)");
