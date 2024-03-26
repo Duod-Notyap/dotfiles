@@ -27,6 +27,12 @@ function buildConfig(opts)
         cwd = "${workspaceFolder}"
     }
 
+    if opts == nil then
+        opts = {
+            args = false
+        }
+    end
+
     if opts.args then
         ret.args = function()
             local args = vim.fn.input("Arguments: ")
@@ -34,15 +40,43 @@ function buildConfig(opts)
         end
     end
 
-    ret.program = function()
-        return "${workspaceFolder}" .. "/" .. C_BUILDDIR .. "/" .. vim.fn.input('Executable: ')
+    if not opts.program then
+        ret.program = function()
+            return vim.fn.input('Executable: ', vim.fn.getcwd() .. '/', 'file')
+        end
+    else
+        ret.program = opts.program
     end
 
     return ret
 end
 
+function prep_opts(opts)
+    if type(opts.program) == "function" then
+        opts.program = opts.program()
+    end
+
+    return opts;
+end
+
+LAST_RAN_CONFIG = nil
+function run(opts)
+    opts = prep_opts(opts)
+
+    LAST_RAN_CONFIG = opts
+    dap.run(opts)
+end
+
+function rerun()
+    if LAST_RAN_CONFIG == nil then
+        vim.fn.printf('No Previously ran config')
+    else
+        run(LAST_RAN_CONFIG)
+    end
+end
+
 function runBuilt(opts)
-    dap.run(buildConfig(opts))
+    run(buildConfig(opts))
 end
 
 
@@ -108,6 +142,10 @@ function compileCmake(printFn, opts)
 end
 
 function tryCompileC(opts)
+    opts.program = function()
+        return "${workspaceFolder}" .. "/" .. C_BUILDDIR .. "/" .. vim.fn.input('Executable: ')
+    end
+
     return function()
         local consoleBuffer = dapui.elements.console.buffer()
         local globJobId
@@ -141,24 +179,32 @@ function tryCompileC(opts)
     end
 end
 
+function runBasic(opts)
+    return function()
+        run(buildConfig(opts))
+    end
+end
+
 return {
     tryCompileC = tryCompileC,
     configs = {
-            {
+        {
+            name = "Re Run Last",
+            type = "cppgdb",
+            request = "launch",
+            program = rerun,
+            cwd = "${workspaceFolder}"
+        },{
             name = "Launch C (gdb)",
             type = "cppgdb",
             request = "launch",
-            program = function()
-                return vim.fn.input('Executable', vim.fn.getcwd() .. '/', 'file')
-            end,
+            program = runBasic(),
             cwd = "${workspaceFolder}"
         }, {
             name = "Launch C (gdb) [args]",
             type = "cppgdb",
             request = "launch",
-            program = function()
-                return vim.fn.input('Executable', vim.fn.getcwd() .. '/', 'file')
-            end,
+            program = runBasic({ args = true }),
             cwd = "${workspaceFolder}",
             args = function()
                 local args = vim.fn.input("Arguments: ")
@@ -175,7 +221,7 @@ return {
             type = "cppgdb",
             request = "launch",
             program = tryCompileC({ args = true }),
-            cwd = "${workspaceFolder"
+            cwd = "${workspaceFolder}"
         }, {
             name = "Attach to server :1234",
             type = "cppgdb",

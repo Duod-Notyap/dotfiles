@@ -16,7 +16,8 @@ config.clangd.setup({
 })
 
 config.tsserver.setup({
-    capabilities = cmpCapabilities
+    capabilities = cmpCapabilities,
+    cmd = { "npx", "typescript-language-server", "--stdio" }
 })
 
 config.rust_analyzer.setup({
