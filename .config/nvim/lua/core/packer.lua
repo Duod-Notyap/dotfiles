@@ -29,6 +29,7 @@ return require('packer').startup(function(use)
     use 'water-sucks/darkrose.nvim'
     use 'folke/neodev.nvim'
     use 'mfussenegger/nvim-dap'
+    use 'nvim-neotest/nvim-nio'
     use 'rcarriga/nvim-dap-ui'
     use 'mbbill/undotree'
     use 'easymotion/vim-easymotion'
@@ -60,8 +61,9 @@ return require('packer').startup(function(use)
     use "startup-nvim/startup.nvim"
 
     use {
-      'kkoomen/vim-doge',
-      run = ':call doge#install()'
+        "danymat/neogen",
+        -- Uncomment next line if you want to follow only stable versions
+        -- tag = "*"
     }
 
     use {

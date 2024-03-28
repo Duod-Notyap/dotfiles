@@ -10,6 +10,11 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+luasnip.config.set_config({
+  region_check_events = 'InsertEnter',
+  delete_check_events = 'InsertLeave'
+})
+
 cmp.setup({
     snippet = {
       -- REQUIRED - you must specify a snippet engine
@@ -23,7 +28,7 @@ cmp.setup({
       -- completion = cmp.config.window.bordered(),
       -- documentation = cmp.config.window.bordered(),
     },
-    mapping = cmp.mapping.preset.insert({    
+    mapping = cmp.mapping.preset.insert({
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 if #cmp.get_entries() == 1 then
