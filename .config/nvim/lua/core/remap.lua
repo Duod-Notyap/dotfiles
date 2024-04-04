@@ -20,3 +20,16 @@ vim.keymap.set("n", "0", "^");
 vim.keymap.set("n", ")", "<Home>"); -- I dont use sentences or paragraph based motions so idc about losing )
 
 vim.keymap.set("n", "<leader>gb", ":ls<CR>:b");
+
+-- Bracket completion
+vim.keymap.set("i", "{", "{}<Esc>i")
+vim.keymap.set("i", "{<CR>", "{<CR>}<Esc>O")
+vim.keymap.set("i", "[", "[]<Esc>i")
+vim.keymap.set("i", "[<CR>", "[<CR>]<Esc>O")
+vim.keymap.set("i", "(", "()<Esc>i")
+vim.keymap.set("i", "(<CR>", "(<CR>)<Esc>O")
+vim.keymap.set("i", "<", "<><Esc>i") --This one doesnt get a newline
+vim.keymap.set("i", "\"", "\"\"<Esc>i") --This one doesnt get a newline
+vim.keymap.set("i", "'", "''<Esc>i") --This one doesnt get a newline
+
+vim.keymap.set("n", "<leader>br", "i<CR><Esc>k$")

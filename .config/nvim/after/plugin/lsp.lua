@@ -47,6 +47,25 @@ config.lua_ls.setup({
   }
 })
 
+local htmlCapabilities = require("cmp_nvim_lsp").default_capabilities()
+htmlCapabilities.textDocument.completion.completionItem.snippetSupport = true
+config.html.setup({
+    capabilities = htmlCapabilities
+})
+config.emmet_ls.setup({
+    -- on_attach = on_attach,
+    capabilities = htmlCapabilities,
+    filetypes = { "eruby", "html", "javascriptreact", "less", "svelte", "pug", "typescriptreact", "vue" },
+    init_options = {
+      html = {
+        options = {
+          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          ["bem.enabled"] = true,
+        },
+      },
+    }
+})
+
 vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
 vim.keymap.set("n", "<leader>si", vim.lsp.buf.hover);
 vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
