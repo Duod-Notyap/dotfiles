@@ -121,3 +121,4 @@ alias k=kubectl
 
 [[ ! -f ~/.kube/completion.zsh.inc ]] || source ~/.kube/completion.zsh.inc
 eval "$(zoxide init zsh --cmd cd)"
+eval "$(thefuck --alias)"

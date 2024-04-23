@@ -100,7 +100,7 @@ end
 function runMake(printFn, opts)
     local done = false
     local jobId 
-    jobId = vim.fn.jobstart("cd " .. C_BUILDDIR .. " && make", {
+    jobId = vim.fn.jobstart("cd " .. C_BUILDDIR .. " && make -j4", {
         on_stdout = function(_, text)
             printFn(jobId, text)
         end,
