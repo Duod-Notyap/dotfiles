@@ -5,6 +5,9 @@ local config = require("lspconfig")
 
 local cmpCapabilities = require("cmp_nvim_lsp").default_capabilities()
 
+vim.diagnostic.config({
+    update_in_insert = true
+})
 
 -- config.ccls.setup({
 --     capabilities = cmpCapabilities
@@ -18,7 +21,6 @@ config.clangd.setup({
 config.tsserver.setup({
     capabilities = cmpCapabilities,
     cmd = { "npx", "typescript-language-server", "--stdio" },
-    
 })
 
 config.rust_analyzer.setup({

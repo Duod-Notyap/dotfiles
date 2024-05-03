@@ -26,6 +26,10 @@ return require('packer').startup(function(use)
     use 'vim-airline/vim-airline'
     use "aktersnurra/no-clown-fiesta.nvim"
     use 'tyrannicaltoucan/vim-deep-space'
+    use { 
+        'kkoomen/vim-doge',
+        run = ":call doge#install()"
+    }
     use 'water-sucks/darkrose.nvim'
     use 'folke/neodev.nvim'
     use 'mfussenegger/nvim-dap'
@@ -60,12 +64,6 @@ return require('packer').startup(function(use)
     }
 
     use "startup-nvim/startup.nvim"
-
-    use {
-        "danymat/neogen",
-        -- Uncomment next line if you want to follow only stable versions
-        -- tag = "*"
-    }
 
     use {
         'nvim-tree/nvim-tree.lua',

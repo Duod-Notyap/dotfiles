@@ -13,7 +13,7 @@
 local function setupAutoBrace(args)
     setmetatable(args, {__index={enable_formatting = true, enable_skip_closed = true}})
     if args.enable_formatting then
-        vim.keymap.set("i", args.open.. "<CR>", args.open .. "<CR>" .. args.close .. "<Esc>O")
+        vim.keymap.set("i", args.open.. "<CR>", args.open .. "<CR>" .. args.close .. "<Up><End><CR>")
     end
 
     if args.open == args.close then
@@ -27,10 +27,10 @@ local function setupAutoBrace(args)
                 vim.api.nvim_win_set_cursor(0, {row, col+1})
             end)
         else
-            vim.keymap.set("i", args.open, args.open .. args.close .. "<Esc>i")
+            vim.keymap.set("i", args.open, args.open .. args.close .. "<Left>")
         end
     else
-        vim.keymap.set("i", args.open, args.open .. args.close .. "<Esc>i")
+        vim.keymap.set("i", args.open, args.open .. args.close .. "<Left>")
         if args.enable_skip_closed then
             vim.keymap.set("i", args.close, function()
                 local row,col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -77,3 +77,6 @@ setupAutoBrace{open="'", close="'", enable_formatting = false}
 
 vim.keymap.set("n", "<leader>br", "i<CR><Esc>k$")
 vim.keymap.set({'n', 'i', 'v'}, '<F1>', '')
+
+vim.keymap.set("n", "G", "Gzz")
+
