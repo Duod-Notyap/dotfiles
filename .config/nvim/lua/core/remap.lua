@@ -76,7 +76,9 @@ setupAutoBrace{open='"', close='"', enable_formatting = false}
 setupAutoBrace{open="'", close="'", enable_formatting = false}
 
 vim.keymap.set("n", "<leader>br", "i<CR><Esc>k$")
-vim.keymap.set({'n', 'i', 'v'}, '<F1>', '')
+vim.keymap.set({'n', 'i', 'v'}, '<F1>', '') -- I dont want it
 
-vim.keymap.set("n", "G", "Gzz")
+vim.keymap.set("n", "G", "Gzz"); -- Personal preference...
+vim.keymap.set("n", "<leader>qr", ":mks .sess.vim<CR><leader>qq")
+vim.keymap.set("n", "<leader>sl", ":so .sess.vim<CR>")
 

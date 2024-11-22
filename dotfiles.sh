@@ -13,6 +13,12 @@ P10K_INSTALL=$HOME/.oh-my-zsh/custom/themes/powerlevel10k
 NVIM_BUILD_DIR="./nvim-build"
 DOTFILES_DIR=$(pwd)
 
+SUDO=""
+if [ `id -u` == "0" ]
+then
+SUDO=sudo
+fi
+
 ln_ask () {
     if [ -f $2 ] || [ -d $2 ]
     then

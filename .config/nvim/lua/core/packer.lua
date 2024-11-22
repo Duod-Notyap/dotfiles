@@ -17,6 +17,8 @@ return require('packer').startup(function(use)
         run = "make install_jsregexp"
     }
 
+    use 'airblade/vim-gitgutter'
+    use 'tpope/vim-fugitive'
 
     use 'alvarocz/vim-northpole'
     use {

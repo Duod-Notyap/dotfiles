@@ -9,29 +9,40 @@ local extraCommands = {
 }
 
 local handlers = { }
-handlers[extraCommands.findSourceDefinition] = function(args)
-    local result = args[vim.tbl_keys(args)[1]];
-    if result["error"] ~= nil then
-        print(result.error);
-        return
-    end
-
-    print(result.start.line)
-end
+handlers[extraCommands.findSourceDefinition] = vim.lsp.handlers["textDocument/definition"];
 
 local function jump_to_file_location(file, location)
     vim.cmd.edit(file)
     vim.lsp.util.jump_to_location(location);
 end
 
+local function get_client_by_name(bufnr, name)
+    local clients = vim.lsp.get_clients({bufnr});
+    for _, client in ipairs(clients) do
+        if client.name == name then
+            return client;
+        end
+    end
+
+    return nil;
+end
+
 local function go_to_source_implementation()
-    local r, c = unpack(vim.api.nvim_win_get_cursor(0));
-    local name = vim.api.nvim_buf_get_name(0);
-    vim.lsp.buf_request_all(
-        0,
-        "findSourceDefinition",
-        { line = r, offset = c, file = name },
-        handlers[extraCommands.findSourceDefinition])
+    local client = get_client_by_name(0, "tsserver");
+    if client == nil then
+        vim.print("goToSourceDefinition requires a tsserver lsp active");
+        return;
+    end
+
+    local pos = vim.lsp.util.make_position_params(0);
+    vim.print(client.handlers)
+    client.request(
+        "workspace/executeCommand",
+        {
+            command = "_typescript.goToSourceDefinition",
+            arguments = {pos.textDocument.uri, pos.position}
+        },
+        vim.lsp.handlers["textDocument/definition"], 0)
 end
 
 vim.keymap.set("n", "<leader>gs", go_to_source_implementation);
@@ -59,13 +70,13 @@ vim.diagnostic.config({
 -- })
 
 config.clangd.setup({
-    cmd = { "clangd-16" },
+    cmd = { "clangd-18" },
     capabilities = cmpCapabilities
 })
 
 config.tsserver.setup({
     capabilities = cmpCapabilities,
-    cmd = { "npx", "typescript-language-server", "--stdio" },
+    cmd = { "npx", "typescript-language-server", "--stdio" }
 })
 
 config.rust_analyzer.setup({
@@ -104,7 +115,7 @@ config.html.setup({
 config.emmet_ls.setup({
     -- on_attach = on_attach,
     capabilities = htmlCapabilities,
-    filetypes = { "eruby", "html", "javascriptreact", "less", "svelte", "pug", "typescriptreact", "vue" },
+    filetypes = { "eruby", "html", "javascriptreact", "less", "svelte", "pug", "typescriptreact", "vue", "mason", "ejs" },
     init_options = {
       html = {
         options = {
