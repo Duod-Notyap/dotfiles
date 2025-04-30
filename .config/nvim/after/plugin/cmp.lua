@@ -63,7 +63,7 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = true })
     }),
 
     sources = cmp.config.sources({
@@ -73,6 +73,15 @@ cmp.setup({
       -- { name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
     }, {
-        { name = 'buffer' }
-    })
+        { name = 'buffer' },
+        { name = 'nvim_lsp_signature_help' }
+    }),
+})
+
+cmp.setup.cmdline('/', {
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp_document_symbol' }
+  }, {
+    { name = 'buffer' }
+  })
 })

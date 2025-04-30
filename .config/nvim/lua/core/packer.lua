@@ -46,9 +46,12 @@ return require('packer').startup(function(use)
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
+    use 'hrsh7th/cmp-nvim-lsp-signature-help'
     use 'hrsh7th/nvim-cmp'
     use { 'saadparwaiz1/cmp_luasnip' }
     use 'mg979/vim-visual-multi'
+    use 'sainnhe/everforest'
+    use 'vim-scripts/ego.vim'
     use {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
@@ -56,6 +59,12 @@ return require('packer').startup(function(use)
     }
 
     use "loctvl842/monokai-pro.nvim"
+
+    use '0xstepit/flow.nvim'
+    use {
+        'OXY2DEV/markview.nvim',
+        tag = "v25.5.4"
+    }
 
     use 'tpope/vim-surround'
 
@@ -81,4 +90,6 @@ return require('packer').startup(function(use)
             ts_update()
         end,
     }
+
+    use "lewis6991/hover.nvim"
 end)

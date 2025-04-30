@@ -1,7 +1,8 @@
 vim.g['rainbow-delimiters'] = {
     enable = true,
     query = 'rainbow-delimiters',
-    strategy = require("rainbow-delimiters").strategy.global
+    strategy = require("rainbow-delimiters").strategy.global,
+    blacklist = { "md" }
 }
 
 require("nvim-treesitter.configs").setup {

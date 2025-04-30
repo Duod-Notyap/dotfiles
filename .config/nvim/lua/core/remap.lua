@@ -65,8 +65,6 @@ vim.keymap.set("n", "<C-h>", "<C-w>h");
 vim.keymap.set("n", "0", "^");
 vim.keymap.set("n", ")", "<Home>"); -- I dont use sentences or paragraph based motions so idc about losing )
 
-vim.keymap.set("n", "<leader>gb", ":ls<CR>:b");
-
 -- Bracket completion
 setupAutoBrace{open='{', close='}'}
 setupAutoBrace{open='(', close=')'}
@@ -79,6 +77,6 @@ vim.keymap.set("n", "<leader>br", "i<CR><Esc>k$")
 vim.keymap.set({'n', 'i', 'v'}, '<F1>', '') -- I dont want it
 
 vim.keymap.set("n", "G", "Gzz"); -- Personal preference...
-vim.keymap.set("n", "<leader>qr", ":mks .sess.vim<CR><leader>qq")
+vim.keymap.set("n", "<leader>qr", ":mks! .sess.vim<CR>:wqa<CR>")
 vim.keymap.set("n", "<leader>sl", ":so .sess.vim<CR>")
 

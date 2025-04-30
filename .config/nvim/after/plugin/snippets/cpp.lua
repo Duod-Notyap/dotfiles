@@ -27,7 +27,6 @@ end
 
 
 ls.add_snippets("cpp", {
-
     s("ecenum", {
         t("enum class "), i(1, "error_name"), t({" {",
         ""}), i(0), t({"",
