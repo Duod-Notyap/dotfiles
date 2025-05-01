@@ -1,3 +1,4 @@
+-- I dont really use this plugin and it just gets in the way a lot... Remove???
 vim.g.EasyMotion_smartcase = 1;
 
 -- vim.keymap.set("n", "/", "<Plug>(easymotion-sn)");

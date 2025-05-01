@@ -26,15 +26,13 @@ require("hover").setup {
 }
 
 vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
-vim.keymap.set("n", "<leader>si", require("hover").hover, {desc = "hover.nvim"})
+-- I need to get used to K vim.keymap.set("n", "<leader>si", require("hover").hover, {desc = "hover.nvim"})
 vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
 vim.keymap.set("n", "<C-p>", function() require("hover").hover_switch("previous") end, {desc = "hover.nvim (previous source)"})
 vim.keymap.set("n", "<C-n>", function() require("hover").hover_switch("next") end, {desc = "hover.nvim (next source)"})
 
 local config = require("lspconfig")
 local cmpCapabilities = require("cmp_nvim_lsp").default_capabilities()
-
-
 
 local extraCommands = {
     findSourceDefinition = "textDocument/findSourceDefinition"
@@ -116,8 +114,7 @@ config.ts_ls.setup({
     -- set to 'typescript'. I believe nvim is detecting javascript and something 
     -- should be overwriting it to typescript later but I do not know where that is
     -- done. 
-    -- TODO - solve this permanently. Probably a plugin somewhere. I kinda suspect 
-    -- doge
+    -- TODO - solve this permanently. Probably a plugin somewhere. I kinda suspect doge
     get_language_id = function(bufnr, filetype)
         local name = vim.fn.expand("#" .. bufnr .. ":e");
         if name == "ts" then

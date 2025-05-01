@@ -31,6 +31,7 @@ vim.keymap.set("n", "<leader>gb", function()
 
     harpoon:list("buffers"):clear()
 
+    local count = 0;
     for line in out.output:gmatch("([^\n]*)\n?") do
         if line == nil or line:len() <= 0 then goto continue end
 
@@ -38,6 +39,7 @@ vim.keymap.set("n", "<leader>gb", function()
         local data = tonumber(match);
         if data == nil or data == 0 then goto continue end
 
+        count = count + 1;
         harpoon:list("buffers"):add({
             value = line,
             context = data
@@ -45,7 +47,14 @@ vim.keymap.set("n", "<leader>gb", function()
         ::continue::
     end
 
-    harpoon.ui:toggle_quick_menu(harpoon:list("buffers"));
+    if count <= 0 or count <= 1 then
+        print("No other buffers to go to...")
+        return
+    end
+
+    harpoon.ui:toggle_quick_menu(harpoon:list("buffers"), {
+        height_in_lines = math.min(count, 16)
+    });
 end)
 
 local builtin = require('telescope.builtin')
