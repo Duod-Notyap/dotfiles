@@ -64,6 +64,4 @@ vim.keymap.set('n', '<leader>pw', function()
     builtin.find_files({ cwd = tutils.buffer_dir() })
 end)
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
-vim.keymap.set('n', '<leader>ps', function()
-	builtin.grep_string({ search = vim.fn.input("Grep > ") });
-end)
+vim.keymap.set('n', '<leader>ps', builtin.live_grep, {})

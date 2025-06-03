@@ -18,7 +18,9 @@ return require('packer').startup(function(use)
     }
 
     use 'airblade/vim-gitgutter'
+    use 'tpope/vim-surround'
     use 'tpope/vim-fugitive'
+    use 'tpope/vim-repeat'
 
     use 'alvarocz/vim-northpole'
     use {
@@ -66,7 +68,6 @@ return require('packer').startup(function(use)
         tag = "v25.5.4"
     }
 
-    use 'tpope/vim-surround'
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.4',

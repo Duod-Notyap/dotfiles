@@ -119,6 +119,9 @@ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 alias k=kubectl
 
+[[ ! -d ~/.pyenv/shims ]] || export PATH=$HOME/.pyenv/shims:$PATH
+[[ ! -d ~/.pyenv/bin ]] || export PATH=$HOME/.pyenv/bin:$PATH
+
 [[ ! -f ~/.kube/completion.zsh.inc ]] || source ~/.kube/completion.zsh.inc
 eval "$(zoxide init zsh --cmd cd)"
 eval "$(thefuck --alias)"

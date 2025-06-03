@@ -73,10 +73,14 @@ setupAutoBrace{open='<', close='>', enable_formatting = false}
 setupAutoBrace{open='"', close='"', enable_formatting = false}
 setupAutoBrace{open="'", close="'", enable_formatting = false}
 
-vim.keymap.set("n", "<leader>br", "i<CR><Esc>k$")
+vim.keymap.set("n", "<leader>br", "i<CR><Esc>")
 vim.keymap.set({'n', 'i', 'v'}, '<F1>', '') -- I dont want it
 
 vim.keymap.set("n", "G", "Gzz"); -- Personal preference...
-vim.keymap.set("n", "<leader>qr", ":mks! .sess.vim<CR>:wqa<CR>")
-vim.keymap.set("n", "<leader>sl", ":so .sess.vim<CR>")
+
+--These are really buggy, so i dont use em, leave em in case some weirdo 
+--looks at my dotfiles and wants this (hi, whats up, why are you here?)
+--Session reloading
+--vim.keymap.set("n", "<leader>qr", ":mks! .sess.vim<CR>:wqa<CR>")
+--vim.keymap.set("n", "<leader>sl", ":so .sess.vim<CR>")
 
