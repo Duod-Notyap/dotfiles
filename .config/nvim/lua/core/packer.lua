@@ -4,44 +4,27 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-    -- Packer can manage itself
+    -- Packer
     use 'wbthomason/packer.nvim'
 
-    use 'nvim-tree/nvim-web-devicons'
-
-    use 'neovim/nvim-lspconfig'
-
-    use {
-        "L3MON4D3/LuaSnip",
-        tag = "v2.*", 
-        run = "make install_jsregexp"
-    }
-
-    use 'airblade/vim-gitgutter'
-    use 'tpope/vim-surround'
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-repeat'
-
-    use 'alvarocz/vim-northpole'
-    use {
-        'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
-        as = 'rainbow-delimiters.nvim'
-    }
-    use 'vim-airline/vim-airline'
-    use "aktersnurra/no-clown-fiesta.nvim"
-    use 'tyrannicaltoucan/vim-deep-space'
-    use { 
-        'kkoomen/vim-doge',
-        run = ":call doge#install()"
-    }
-    use 'water-sucks/darkrose.nvim'
+    --lsp
     use 'folke/neodev.nvim'
     use 'mfussenegger/nvim-dap'
-    use 'nvim-neotest/nvim-nio'
+    use 'neovim/nvim-lspconfig'
     use 'rcarriga/nvim-dap-ui'
-    use 'mbbill/undotree'
-    use 'easymotion/vim-easymotion'
-    use "rafamadriz/friendly-snippets"
+
+    --theming
+    use '0xstepit/flow.nvim'
+    use 'aktersnurra/no-clown-fiesta.nvim'
+    use 'loctvl842/monokai-pro.nvim'
+    use 'sainnhe/everforest'
+    use 'startup-nvim/startup.nvim'
+    use 'tyrannicaltoucan/vim-deep-space'
+    use 'vim-airline/vim-airline'
+    use 'vim-scripts/ego.vim'
+    use 'water-sucks/darkrose.nvim'
+
+    --cmp
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
@@ -50,40 +33,19 @@ return require('packer').startup(function(use)
     use 'hrsh7th/vim-vsnip-integ'
     use 'hrsh7th/cmp-nvim-lsp-signature-help'
     use 'hrsh7th/nvim-cmp'
+    use { "L3MON4D3/LuaSnip", tag = "v2.*", run = "make install_jsregexp" }
     use { 'saadparwaiz1/cmp_luasnip' }
-    use 'mg979/vim-visual-multi'
-    use 'sainnhe/everforest'
-    use 'vim-scripts/ego.vim'
-    use {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        requires = { {"nvim-lua/plenary.nvim"} }
-    }
-
-    use "loctvl842/monokai-pro.nvim"
-
-    use '0xstepit/flow.nvim'
-    use {
-        'OXY2DEV/markview.nvim',
-        tag = "v25.5.4"
-    }
+    use "rafamadriz/friendly-snippets"
 
 
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.4',
-        -- or                            , branch = '0.1.x',
-        requires = { {'nvim-lua/plenary.nvim'} }
-    }
+    --File management
+    use { 'nvim-telescope/telescope.nvim', tag = '0.1.4', requires = { {'nvim-lua/plenary.nvim'} } }
+    use { 'nvim-tree/nvim-tree.lua', requires = { 'nvim-tree/nvim-web-devicons', } }
+    use 'nvim-tree/nvim-web-devicons'
+    use { 'ThePrimeagen/harpoon', branch = "harpoon2", requires = { {"nvim-lua/plenary.nvim"} } }
 
-    use "startup-nvim/startup.nvim"
-
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons', -- optional
-        },
-    }   
-
+    --Highlighting
+    use { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim', as = 'rainbow-delimiters.nvim' }
     use {
         'nvim-treesitter/nvim-treesitter',
         run = function()
@@ -92,5 +54,21 @@ return require('packer').startup(function(use)
         end,
     }
 
-    use "lewis6991/hover.nvim"
+    -- misc
+    use 'airblade/vim-gitgutter'
+    use { 'kkoomen/vim-doge', run = ":call doge#install()" } --This one isnt that great.
+    use 'lewis6991/hover.nvim'
+    use 'mbbill/undotree'
+    use 'mg979/vim-visual-multi'
+    use { 'OXY2DEV/markview.nvim', tag = "v25.5.4" }
+    use 'svermeulen/vim-subversive'
+    use 'svermeulen/vim-yoink'
+    use 'svermeulen/vim-cutlass'
+    use 'tpope/vim-surround'
+    use 'tpope/vim-fugitive'
+    use 'tpope/vim-repeat'
+
+    -- nvim scripting libraries
+    use 'nvim-neotest/nvim-nio'
+
 end)
