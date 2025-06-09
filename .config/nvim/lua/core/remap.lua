@@ -66,12 +66,12 @@ vim.keymap.set("n", "0", "^");
 vim.keymap.set("n", ")", "<Home>"); -- I dont use sentences or paragraph based motions so idc about losing )
 
 -- Bracket completion
-setupAutoBrace{open='{', close='}'}
-setupAutoBrace{open='(', close=')'}
-setupAutoBrace{open='[', close=']'}
-setupAutoBrace{open='<', close='>', enable_formatting = false}
-setupAutoBrace{open='"', close='"', enable_formatting = false}
-setupAutoBrace{open="'", close="'", enable_formatting = false}
+-- setupAutoBrace{open='{', close='}'}
+-- setupAutoBrace{open='(', close=')'}
+-- setupAutoBrace{open='[', close=']'}
+-- setupAutoBrace{open='<', close='>', enable_formatting = false}
+-- setupAutoBrace{open='"', close='"', enable_formatting = false}
+-- setupAutoBrace{open="'", close="'", enable_formatting = false}
 
 vim.keymap.set("n", "<leader>br", "i<CR><Esc>")
 vim.keymap.set({'n', 'i', 'v'}, '<F1>', '') -- I dont want it

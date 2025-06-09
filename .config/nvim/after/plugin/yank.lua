@@ -14,11 +14,3 @@ vim.cmd.nmap('P', '<plug>(YoinkPaste_P)');
 
 vim.cmd.nmap('gp', '<plug>(YoinkPaste_gp)');
 vim.cmd.nmap('gP', '<plug>(YoinkPaste_gP)');
-
-vim.cmd.nnoremap('x', 'd');
-vim.cmd.xnoremap('x', 'd');
-
-vim.cmd.nnoremap('xx', 'dd');
-vim.cmd.nnoremap('X', 'D');
-
-vim.g.yoinkIncludeDeleteOperations = 1;
