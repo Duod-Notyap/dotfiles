@@ -63,7 +63,7 @@ return require('packer').startup(function(use)
     use { 'OXY2DEV/markview.nvim', tag = "v25.5.4" }
     use 'svermeulen/vim-subversive'
     use 'svermeulen/vim-yoink'
-    use 'tpope/vim-surround'
+    use 'kylechui/nvim-surround'
     use 'tpope/vim-fugitive'
     use 'tpope/vim-repeat'
     use { "windwp/nvim-autopairs", event = "InsertEnter", config = function() require("nvim-autopairs").setup {} end }

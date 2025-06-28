@@ -160,19 +160,42 @@ htmlCapabilities.textDocument.completion.completionItem.snippetSupport = true
 config.html.setup({
     capabilities = htmlCapabilities
 })
-config.emmet_ls.setup({
-    -- on_attach = on_attach,
-    capabilities = htmlCapabilities,
-    filetypes = { "eruby", "html", "javascriptreact", "less", "svelte", "pug", "typescriptreact", "vue", "mason", "ejs" },
-    init_options = {
-      html = {
-        options = {
-          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-          ["bem.enabled"] = true,
-        },
-      },
-    }
+config.emmet_language_server.setup({
+  filetypes = { "mason", "eruby", "html", "javascriptreact", "pug", "typescriptreact" },
+  init_options = {
+    ---@type table<string, string>
+    includeLanguages = {},
+    --- @type string[]
+    excludeLanguages = {},
+    --- @type string[]
+    extensionsPath = {},
+    --- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/preferences/)
+    preferences = {},
+    --- @type boolean Defaults to `true`
+    showAbbreviationSuggestions = true,
+    --- @type "always" | "never" Defaults to `"always"`
+    showExpandedAbbreviation = "always",
+    --- @type boolean Defaults to `false`
+    showSuggestionsAsSnippets = false,
+    --- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/syntax-profiles/)
+    syntaxProfiles = {},
+    --- @type table<string, string> [Emmet Docs](https://docs.emmet.io/customization/snippets/#variables)
+    variables = {},
+  },
 })
+--config.emmet_ls.setup({
+--    -- on_attach = on_attach,
+--    capabilities = htmlCapabilities,
+--    filetypes = { "eruby", "html", "javascriptreact", "less", "svelte", "pug", "typescriptreact", "vue", "mason", "ejs" },
+--    init_options = {
+--      html = {
+--        options = {
+--          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+--          ["bem.enabled"] = true,
+--        },
+--      },
+--    }
+--})
 
 vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
 vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
