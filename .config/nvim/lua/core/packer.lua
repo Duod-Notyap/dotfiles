@@ -53,6 +53,7 @@ return require('packer').startup(function(use)
             ts_update()
         end,
     }
+    use { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" }
 
     -- misc
     use 'airblade/vim-gitgutter'
@@ -67,6 +68,7 @@ return require('packer').startup(function(use)
     use 'tpope/vim-fugitive'
     use 'tpope/vim-repeat'
     use { "windwp/nvim-autopairs", event = "InsertEnter", config = function() require("nvim-autopairs").setup {} end }
+    use 'konfekt/vim-formatprgs'
 
     -- nvim scripting libraries
     use 'nvim-neotest/nvim-nio'

@@ -7,7 +7,17 @@ vim.cmd.xmap('<leader>s', '<plug>(SubversiveSubstituteRange)');
 vim.cmd.nmap('<leader>ss', '<plug>(SubversiveSubstituteWordRange)');
 
 vim.cmd.nmap('<c-p>', '<plug>(YoinkPostPasteSwapBack)');
-vim.cmd.nmap('<c-n>', '<plug>(YoinkPostPasteSwapForward)');
+vim.keymap.set('n', '<c-n>', function()
+    local can = vim.fn['yoink#canSwap']();
+    if can == 1 then
+        local keyPress = vim.api.nvim_replace_termcodes('<Plug>(YoinkPostPasteSwapForward)', true, false, true);
+        vim.api.nvim_feedkeys(keyPress, 'n', false);
+        print("can")
+    else
+        local keyPress = vim.api.nvim_replace_termcodes('<Plug>(VM-Find-Under)', true, false, true);
+        vim.api.nvim_feedkeys(keyPress, 'n', false);
+    end
+end)
 
 vim.cmd.nmap('p', '<plug>(YoinkPaste_p)');
 vim.cmd.nmap('P', '<plug>(YoinkPaste_P)');

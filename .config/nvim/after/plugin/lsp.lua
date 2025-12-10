@@ -1,20 +1,19 @@
 local neodev = require("neodev")
 neodev.setup()
 
-require("hover").setup {
-    init = function()
-        -- Require providers
-        require("hover.providers.lsp")
+require("hover").config {
+    providers = {
+        require("hover.providers.lsp"),
+        require('hover.providers.dap')
         -- require('hover.providers.gh')
         -- require('hover.providers.gh_user')
         -- require('hover.providers.jira')
-        require('hover.providers.dap')
         -- require('hover.providers.fold_preview')
         -- require('hover.providers.diagnostic')
         -- require('hover.providers.man')
         -- require('hover.providers.dictionary')
         -- require('hover.providers.highlight')
-    end,
+    },
     preview_opts = {
         border = 'single'
     },
@@ -25,26 +24,12 @@ require("hover").setup {
     mouse_providers = { }, mouse_delay = 1000
 }
 
-vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
--- I need to get used to K vim.keymap.set("n", "<leader>si", require("hover").hover, {desc = "hover.nvim"})
-vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
-vim.keymap.set("n", "<C-p>", function() require("hover").hover_switch("previous") end, {desc = "hover.nvim (previous source)"})
-vim.keymap.set("n", "<C-n>", function() require("hover").hover_switch("next") end, {desc = "hover.nvim (next source)"})
-
-local config = require("lspconfig")
-local cmpCapabilities = require("cmp_nvim_lsp").default_capabilities()
-
 local extraCommands = {
     findSourceDefinition = "textDocument/findSourceDefinition"
 }
 
 local handlers = { }
 handlers[extraCommands.findSourceDefinition] = vim.lsp.handlers["textDocument/definition"];
-
-local function jump_to_file_location(file, location)
-    vim.cmd.edit(file)
-    vim.lsp.util.jump_to_location(location);
-end
 
 local function get_client_by_name(bufnr, name)
     local clients = vim.lsp.get_clients({bufnr});
@@ -57,6 +42,8 @@ local function get_client_by_name(bufnr, name)
     return nil;
 end
 
+
+-- ts_ls custom implementation to go to source code not definition.
 local function go_to_source_implementation()
     local client = get_client_by_name(0, "ts_ls");
     if client == nil then
@@ -64,7 +51,7 @@ local function go_to_source_implementation()
         return;
     end
 
-    local pos = vim.lsp.util.make_position_params(0);
+    local pos = vim.lsp.util.make_position_params(0, 'utf-8');
     vim.print(client.handlers)
     client.request(
         "workspace/executeCommand",
@@ -75,7 +62,8 @@ local function go_to_source_implementation()
         vim.lsp.handlers["textDocument/definition"], 0)
 end
 
-vim.keymap.set("n", "<leader>gs", go_to_source_implementation);
+
+vim.diagnostic.config({ update_in_insert = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
@@ -87,26 +75,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 end
             end
         end
+
+        --Keybinds
+        vim.keymap.set("n", "K", require("hover").open, {desc = "hover.nvim"})
+        vim.keymap.set("n", "gK", require("hover").select, {desc = "hover.nvim (select)"})
+        vim.keymap.set("n", "<C-p>", function() require("hover").switch("previous") end, {desc = "hover.nvim (previous source)"})
+        vim.keymap.set("n", "<C-n>", function() require("hover").switch("next") end, {desc = "hover.nvim (next source)"})
+        vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
+        vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action);
+        vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float);
+        vim.keymap.set("n", "<leader>df", vim.lsp.buf.code_action);
+        vim.keymap.set("n", "<leader>gs", go_to_source_implementation);
     end
 })
 
+local cmpCapabilities = require("cmp_nvim_lsp").default_capabilities()
 
-vim.diagnostic.config({
-    update_in_insert = true
-})
 
--- config.ccls.setup({
---     capabilities = cmpCapabilities
--- })
-
-config.clangd.setup({
-    cmd = { "clangd-18" },
+vim.lsp.config.clangd = {
+    cmd = { "clangd-21" },
     capabilities = cmpCapabilities
-})
+}
+vim.lsp.enable('clangd')
 
-config.ts_ls.setup({
+
+vim.lsp.config.ts_ls = {
     capabilities = cmpCapabilities,
-    cmd = { "bash", "-c", "tee /home/pdoud/lsptest/inlsp.log | npx typescript-language-server --stdio | tee /home/pdoud/lsptest/outlsp.log" },
+    cmd = { "npx", "typescript-language-server", "--stdio" },
 
     -- Sometimes for some reason my setup passes 'javascript' for filetype into this
     -- for a '.ts' file, causing errors about types in a non-ts file. Overriding this
@@ -125,9 +121,11 @@ config.ts_ls.setup({
 
         return filetype;
     end
-})
+}
+vim.lsp.enable('ts_ls')
 
-config.rust_analyzer.setup({
+
+vim.lsp.config.rust_analyzer = {
     capabilities = cmpCapabilities,
     settings = {
         ['rust-analyzer'] = {
@@ -136,69 +134,68 @@ config.rust_analyzer.setup({
             }
         }
     }
-})
+}
+vim.lsp.enable('rust_analyzer')
 
-config.pylsp.setup({
-    capabilities = cmpCapabilities
-})
 
-config.lua_ls.setup({
-  capabilities = cmpCapabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT"
-      }
+vim.lsp.config.gopls = {
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+        },
     }
-  }
-})
+}
+vim.lsp.enable('gopls')
 
-config.somesass_ls.setup({})
+
+vim.lsp.config.pylsp = {
+    capabilities = cmpCapabilities
+}
+vim.lsp.enable('pylsp')
+
+
+vim.lsp.config.lua_ls = {
+    capabilities = cmpCapabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                version = "LuaJIT"
+            }
+        }
+    }
+}
+vim.lsp.enable('lua_ls')
+
+
+vim.lsp.config.somesass_ls = {}
+vim.lsp.enable('somesass_ls')
+
+-- HTML LSP's
 
 local htmlCapabilities = require("cmp_nvim_lsp").default_capabilities()
 htmlCapabilities.textDocument.completion.completionItem.snippetSupport = true
-config.html.setup({
-    capabilities = htmlCapabilities
-})
-config.emmet_language_server.setup({
-  filetypes = { "mason", "eruby", "html", "javascriptreact", "pug", "typescriptreact" },
-  init_options = {
-    ---@type table<string, string>
-    includeLanguages = {},
-    --- @type string[]
-    excludeLanguages = {},
-    --- @type string[]
-    extensionsPath = {},
-    --- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/preferences/)
-    preferences = {},
-    --- @type boolean Defaults to `true`
-    showAbbreviationSuggestions = true,
-    --- @type "always" | "never" Defaults to `"always"`
-    showExpandedAbbreviation = "always",
-    --- @type boolean Defaults to `false`
-    showSuggestionsAsSnippets = false,
-    --- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/syntax-profiles/)
-    syntaxProfiles = {},
-    --- @type table<string, string> [Emmet Docs](https://docs.emmet.io/customization/snippets/#variables)
-    variables = {},
-  },
-})
---config.emmet_ls.setup({
---    -- on_attach = on_attach,
---    capabilities = htmlCapabilities,
---    filetypes = { "eruby", "html", "javascriptreact", "less", "svelte", "pug", "typescriptreact", "vue", "mason", "ejs" },
---    init_options = {
---      html = {
---        options = {
---          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
---          ["bem.enabled"] = true,
---        },
---      },
---    }
---})
 
-vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
-vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action);
-vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float);
-vim.keymap.set("n", "<leader>df", vim.lsp.buf.code_action);
+
+vim.lsp.config.html = { capabilities = htmlCapabilities }
+vim.lsp.enable('html')
+
+
+vim.lsp.config.emmet_language_server = {
+    filetypes = { "mason", "eruby", "html", "javascriptreact", "pug", "typescriptreact" },
+    init_options = {
+        includeLanguages = {},
+        excludeLanguages = {},
+        extensionsPath = {},
+        preferences = {},
+        showAbbreviationSuggestions = true,
+        showExpandedAbbreviation = "always",
+        showSuggestionsAsSnippets = false,
+        syntaxProfiles = {},
+        variables = {},
+    },
+}
+vim.lsp.enable('emmet_language_server')

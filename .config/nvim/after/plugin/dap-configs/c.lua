@@ -61,6 +61,8 @@ end
 
 LAST_RAN_CONFIG = nil
 function run(opts)
+    resetConsoleBuffer();
+
     opts = prep_opts(opts)
 
     LAST_RAN_CONFIG = opts
@@ -79,6 +81,12 @@ function runBuilt(opts)
     run(buildConfig(opts))
 end
 
+function resetConsoleBuffer() 
+    local buffer = dapui.elements.console.buffer()
+    vim.api.nvim_buf_call(buffer, function()
+        vim.cmd.set("nomodified")
+    end)
+end
 
 -- C BUILD LOGIC
 function runCmake(printFn, opts)
