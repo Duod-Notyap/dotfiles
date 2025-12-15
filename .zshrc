@@ -144,3 +144,6 @@ esac
 # pnpm end
 
 source "/home/pdoud/clone/emsdk/emsdk_env.sh" 2>> /dev/null
+
+export KREW_HOME="${KREW_ROOT:-$HOME/.krew}/bin"
+[[ -d $KREW_HOME ]] && export PATH="$KREW_HOME:$PATH"

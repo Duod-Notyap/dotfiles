@@ -8,10 +8,12 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     --lsp
-    use 'folke/neodev.nvim'
     use 'mfussenegger/nvim-dap'
     use 'neovim/nvim-lspconfig'
     use 'rcarriga/nvim-dap-ui'
+    use {
+        'folke/lazydev.nvim'
+    }
 
     --theming
     use '0xstepit/flow.nvim'

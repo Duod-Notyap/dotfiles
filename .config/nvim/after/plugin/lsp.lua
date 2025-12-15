@@ -1,10 +1,7 @@
-local neodev = require("neodev")
-neodev.setup()
-
 require("hover").config {
     providers = {
         require("hover.providers.lsp"),
-        require('hover.providers.dap')
+        -- require('hover.providers.dap')
         -- require('hover.providers.gh')
         -- require('hover.providers.gh_user')
         -- require('hover.providers.jira')
