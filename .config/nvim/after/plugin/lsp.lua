@@ -1,15 +1,15 @@
 require("hover").config {
     providers = {
-        require("hover.providers.lsp"),
-        -- require('hover.providers.dap')
+        "hover.providers.lsp",
+        'hover.providers.dap',
+        'hover.providers.diagnostic',
+        'hover.providers.man',
+        -- 'hover.providers.dictionary',
+        -- 'hover.providers.highlight'
         -- require('hover.providers.gh')
         -- require('hover.providers.gh_user')
         -- require('hover.providers.jira')
         -- require('hover.providers.fold_preview')
-        -- require('hover.providers.diagnostic')
-        -- require('hover.providers.man')
-        -- require('hover.providers.dictionary')
-        -- require('hover.providers.highlight')
     },
     preview_opts = {
         border = 'single'
@@ -62,6 +62,10 @@ end
 
 vim.diagnostic.config({ update_in_insert = true })
 
+vim.keymap.set("n", "K", require("hover").open, {desc = "hover.nvim"})
+vim.keymap.set("n", "gK", require("hover").select, {desc = "hover.nvim (select)"})
+vim.keymap.set("n", "<C-p>", function() require("hover").switch("previous") end, {desc = "hover.nvim (previous source)"})
+vim.keymap.set("n", "<C-n>", function() require("hover").switch("next") end, {desc = "hover.nvim (next source)"})
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -74,10 +78,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
 
         --Keybinds
-        vim.keymap.set("n", "K", require("hover").open, {desc = "hover.nvim"})
-        vim.keymap.set("n", "gK", require("hover").select, {desc = "hover.nvim (select)"})
-        vim.keymap.set("n", "<C-p>", function() require("hover").switch("previous") end, {desc = "hover.nvim (previous source)"})
-        vim.keymap.set("n", "<C-n>", function() require("hover").switch("next") end, {desc = "hover.nvim (next source)"})
         vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
         vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action);
