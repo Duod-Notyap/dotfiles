@@ -1,3 +1,5 @@
+local LazyVim = require("lazy.core.util")
+
 return {
     -- Packer
     'wbthomason/packer.nvim',
@@ -47,7 +49,7 @@ return {
 
 
     --File management
-    { 'nvim-telescope/telescope.nvim', tag = '0.1.4', requires = { {'nvim-lua/plenary.nvim'} } },
+    { 'nvim-telescope/telescope.nvim', branch = 'master', requires = { {'nvim-lua/plenary.nvim'} } },
     { 'nvim-tree/nvim-tree.lua', requires = { 'nvim-tree/nvim-web-devicons', } },
     'nvim-tree/nvim-web-devicons',
     { 'ThePrimeagen/harpoon', branch = "harpoon2", requires = { {"nvim-lua/plenary.nvim"} } },
@@ -56,38 +58,45 @@ return {
     { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim', as = 'rainbow-delimiters.nvim' },
     {
         'nvim-treesitter/nvim-treesitter',
+        lazy = false,
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
         end,
-        opts = {
-            textobjects = {
-                select = {
-                    enable = true,
-                    lookahead = true,
-                    keymaps = {
-                        ["af"] = "@function.outer",
-                        ["if"] = "@function.inner",
-                        ["ac"] = "@class.outer",
-                        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-                        ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+        config = function()
+            require("nvim-treesitter.config").setup({
+                textobjects = {
+                    select = {
+                        enable = true,
+                        lookahead = true,
+                        keymaps = {
+                            ["af"] = "@function.outer",
+                            ["if"] = "@function.inner",
+                            ["ac"] = "@class.outer",
+                            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                            ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+                        },
+                        selection_modes = {
+                            ['@parameter.outer'] = 'v',
+                            ['@function.outer'] = 'V',
+                            ['@class.outer'] = '<c-v>',
+                        },
+                        include_surrounding_whitespace = false
                     },
-                    selection_modes = {
-                        ['@parameter.outer'] = 'v',
-                        ['@function.outer'] = 'V',
-                        ['@class.outer'] = '<c-v>',
-                    },
-                    include_surrounding_whitespace = false
                 },
-            },
-            ensure_installed = { "rust", "cpp", "c", "javascript", "typescript", "lua", "vim", "vimdoc" },
-            sync_install = false,
-            auto_install = true,
-            highlight = { enable = true },
-            indent = { enable = true }
-        }
+                ensure_installed = { "rust", "cpp", "c", "javascript", "typescript", "lua", "vim", "vimdoc" },
+                sync_install = false,
+                auto_install = true,
+                highlight = { enable = true },
+                indent = { enable = true },
+            })
+        end
     },
-    { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "main",
+        event = "VeryLazy",
+    },
 
     -- misc
     'airblade/vim-gitgutter',

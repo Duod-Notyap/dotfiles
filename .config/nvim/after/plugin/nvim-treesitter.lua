@@ -5,9 +5,11 @@ vim.g['rainbow-delimiters'] = {
     blacklist = { "md" }
 }
 
-local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-parser_configs.kpl = {
+local parsers = require("nvim-treesitter.parsers")
+parsers.kpl = {
+    tier = 2,
     install_info = {
+        revision = "213456789abcdef",
         url = "~/dev/tree-sitter-kpl",
         files = { "src/parser.c", "src/scanner.c" },
         branch = "master",
