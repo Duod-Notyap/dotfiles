@@ -1,9 +1,6 @@
 local LazyVim = require("lazy.core.util")
 
 return {
-    -- Packer
-    'wbthomason/packer.nvim',
-
     --lsp
     'mfussenegger/nvim-dap',
     'neovim/nvim-lspconfig',
@@ -59,38 +56,8 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         lazy = false,
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update()
-        end,
-        config = function()
-            require("nvim-treesitter.config").setup({
-                textobjects = {
-                    select = {
-                        enable = true,
-                        lookahead = true,
-                        keymaps = {
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["ac"] = "@class.outer",
-                            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-                            ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
-                        },
-                        selection_modes = {
-                            ['@parameter.outer'] = 'v',
-                            ['@function.outer'] = 'V',
-                            ['@class.outer'] = '<c-v>',
-                        },
-                        include_surrounding_whitespace = false
-                    },
-                },
-                ensure_installed = { "rust", "cpp", "c", "javascript", "typescript", "lua", "vim", "vimdoc" },
-                sync_install = false,
-                auto_install = true,
-                highlight = { enable = true },
-                indent = { enable = true },
-            })
-        end
+        build = ":TSUpdate",
+        tag = "v0.10.0"
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
