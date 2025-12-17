@@ -1,9 +1,9 @@
 require("hover").config {
     providers = {
         "hover.providers.lsp",
-        'hover.providers.dap',
-        'hover.providers.diagnostic',
-        'hover.providers.man',
+        -- 'hover.providers.dap',
+        -- 'hover.providers.diagnostic',
+        -- 'hover.providers.man',
         -- 'hover.providers.dictionary',
         -- 'hover.providers.highlight'
         -- require('hover.providers.gh')

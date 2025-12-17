@@ -67,7 +67,11 @@ return {
 
     -- misc
     'airblade/vim-gitgutter',
-    { 'kkoomen/vim-doge', run = ":call doge#install()" },
+    {
+        'kkoomen/vim-doge',
+        event = "BufReadPre",
+        command = ":call doge#install()"
+    },
     'lewis6991/hover.nvim',
     'mbbill/undotree',
     'mg979/vim-visual-multi',
