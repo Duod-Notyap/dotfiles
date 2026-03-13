@@ -76,7 +76,7 @@ vim.keymap.set("n", "<F17>", function (fallback)
     dap.close()
 end)
 
-local adapterFiles = { "c" }
+local adapterFiles = { "c", "node" }
 
 for i,file in ipairs(adapterFiles) do
     local adapters = require("after.plugin.dap-adapters." .. file)
@@ -87,7 +87,6 @@ end
 --- Check if a file or directory exists in this path
 
 dap.configurations.c = require("after.plugin.dap-configs.c").configs
-
 dap.configurations.cpp = dap.configurations.c
 
 dap.configurations.rust = {
@@ -114,3 +113,5 @@ dap.configurations.rust = {
         initCommands = rust_initcommands
     }
 }
+
+dap.configurations.javascript = require("after.plugin.dap-configs.node").configs

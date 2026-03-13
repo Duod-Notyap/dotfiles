@@ -114,9 +114,10 @@ alias v=nvim
 alias nv=nvim
 alias vim=nvim
 alias t=tmux
+alias k=kubectl
+alias c=clear
 
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
-alias k=kubectl
 
 [[ ! -d ~/.pyenv/shims ]] || export PATH=$HOME/.pyenv/shims:$PATH
 [[ ! -d ~/.pyenv/bin ]] || export PATH=$HOME/.pyenv/bin:$PATH
@@ -127,7 +128,7 @@ export GOPATH=$HOME/.local/share/go
 [[ ! -d $GOPATH ]] || export PATH=$PATH:$GOPATH/bin
 
 [[ ! -f ~/.kube/completion.zsh.inc ]] || source ~/.kube/completion.zsh.inc
-eval "$(zoxide init zsh --cmd cd)"
+eval "$(zoxide init zsh --cmd z)"
 eval "$(thefuck --alias 2>> /dev/null)"
 
 export NVM_DIR="$HOME/.nvm"

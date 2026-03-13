@@ -30,6 +30,7 @@ return {
     'vim-airline/vim-airline',
     'vim-scripts/ego.vim',
     'water-sucks/darkrose.nvim',
+    { 'anuvyklack/pretty-fold.nvim', lazy = false, config = function() require('pretty-fold').setup() end },
 
     --cmp
     'hrsh7th/cmp-nvim-lsp',
@@ -42,7 +43,6 @@ return {
     'hrsh7th/nvim-cmp',
     { "L3MON4D3/LuaSnip", tag = "v2.4.1", run = "make install_jsregexp" },
     { 'saadparwaiz1/cmp_luasnip' },
-    "rafamadriz/friendly-snippets",
 
 
     --File management

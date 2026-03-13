@@ -78,12 +78,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
 
         --Keybinds
-        vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename);
-        vim.keymap.set("n", "<leader>su", vim.lsp.buf.references);
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action);
-        vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float);
-        vim.keymap.set("n", "<leader>df", vim.lsp.buf.code_action);
-        vim.keymap.set("n", "<leader>gs", go_to_source_implementation);
+        vim.keymap.set("n", "<leader>sr", vim.lsp.buf.rename)
+        vim.keymap.set("n", "<leader>su", vim.lsp.buf.references)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
+        vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float)
+        vim.keymap.set("n", "<leader>df", vim.lsp.buf.code_action)
+        vim.keymap.set("n", "<leader>gs", go_to_source_implementation)
+        vim.keymap.set("n", "]e", function() vim.diagnostic.jump({count = 1}) end)
+        vim.keymap.set("n", "[e", function() vim.diagnostic.jump({count = -1}) end)
     end
 })
 
@@ -170,6 +172,12 @@ vim.lsp.enable('lua_ls')
 
 vim.lsp.config.somesass_ls = {}
 vim.lsp.enable('somesass_ls')
+
+vim.lsp.config.eslint = {}
+vim.lsp.enable('eslint')
+
+vim.lsp.config.jsonls = {}
+vim.lsp.enable('jsonls')
 
 -- HTML LSP's
 

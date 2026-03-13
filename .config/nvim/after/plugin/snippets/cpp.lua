@@ -25,10 +25,61 @@ function copy(args)
     return args[1]
 end
 
+local function generateIncludeGuard(args)
+    local name = vim.api.nvim_buf_get_name(0)
+    local file, ext = string.match(name, [[.*[/\\]([^/\\%.]*)([^/\\]*)$]] )
+
+    if file == nil then
+        error("Could not figure out file name")
+    end
+
+    local dir = string.match(name, [[.*[/\\]([^/\\]*)[/\\][^/\\]*$]] )
+
+    local guard = "INCLUDE_"
+
+    if dir ~= nil then
+        guard = guard .. string.upper(dir) .. "_"
+    end
+
+    guard = guard .. string.upper(file) .. "_"
+
+    ext = string.match(ext, "[^%.]*$")
+    if ext ~= nil and ext ~= "" then
+        guard = guard .. string.upper(ext) .. "_"
+    end
+
+    return guard
+end
+
 
 ls.add_snippets("cpp", {
+    s("#guard", {
+      t("#ifndef "), f(generateIncludeGuard), t({"",
+        "#define "}), f(generateIncludeGuard), t({"",
+        "",
+        ""}), i(1), t({"",
+        "",
+        "#endif  // "}), f(generateIncludeGuard)
+    }),
+    s("#pguard", {
+     t({"#pragma once",
+        "#ifndef "}), f(generateIncludeGuard), t({"",
+        "#define "}), f(generateIncludeGuard), t({"",
+        "",
+        ""}), i(1), t({"",
+        "",
+        "#endif  // "}), f(generateIncludeGuard)
+    }),
+    s("#iguard", {
+      t("#ifndef "), i(1, "guard_name"), t({"",
+        "#define "}), f(copy, 1), t({"",
+        "",
+        ""}), i(2), t({"",
+        "",
+        "#endif //"}), f(copy, 1)
+    }),
     s("ecenum", {
-        t("enum class "), i(1, "error_name"), t({" {",
+      t("enum class "), i(1, "error_name"), t({" {",
         ""}), i(0), t({"",
         "}",
         "",
