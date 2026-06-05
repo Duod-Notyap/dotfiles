@@ -148,3 +148,6 @@ source "/home/pdoud/clone/emsdk/emsdk_env.sh" 2>> /dev/null
 
 export KREW_HOME="${KREW_ROOT:-$HOME/.krew}/bin"
 [[ -d $KREW_HOME ]] && export PATH="$KREW_HOME:$PATH"
+
+# To customize prompt, run `p10k configure` or edit ~/dotfiles/.p10k.zsh.
+[[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh

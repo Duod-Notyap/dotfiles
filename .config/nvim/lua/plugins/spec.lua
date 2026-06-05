@@ -19,6 +19,7 @@ return {
             end,
         }
     },
+    "leoluz/nvim-dap-go",
 
     --theming
     '0xstepit/flow.nvim',

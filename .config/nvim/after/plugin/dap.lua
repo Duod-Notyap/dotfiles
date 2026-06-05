@@ -115,3 +115,40 @@ dap.configurations.rust = {
 }
 
 dap.configurations.javascript = require("after.plugin.dap-configs.node").configs
+
+require('dap-go').setup({
+  dap_configurations = {
+      {
+          type = "go",
+          name = "Execute Precompiled",
+          request = "launch",
+          mode = "exec",
+          program = function()
+              return vim.fn.input("Executable: ", vim.fn.getcwd() .. '/', 'file')
+          end,
+      },
+  },
+  delve = {
+      path = "dlv",
+      initialize_timeout_sec = 20,
+      port = "${port}",
+      args = {},
+      -- the build flags that are passed to delve.
+      -- defaults to empty string, but can be used to provide flags
+      -- such as "-tags=unit" to make sure the test suite is
+      -- compiled during debugging, for example.
+      -- passing build flags using args is ineffective, as those are
+      -- ignored by delve in dap mode.
+      -- avaliable ui interactive function to prompt for arguments get_arguments
+      build_flags = {},
+      -- whether the dlv process to be created detached or not. there is
+      -- an issue on delve versions < 1.24.0 for Windows where this needs to be
+      -- set to false, otherwise the dlv server creation will fail.
+      -- avaliable ui interactive function to prompt for build flags: get_build_flags
+      detached = vim.fn.has("win32") == 0,
+      cwd = nil,
+  },
+  tests = {
+      verbose = false,
+  },
+})

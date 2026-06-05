@@ -174,7 +174,6 @@ vim.lsp.config.somesass_ls = {}
 vim.lsp.enable('somesass_ls')
 
 vim.lsp.config.eslint = {}
-vim.lsp.enable('eslint')
 
 vim.lsp.config.jsonls = {}
 vim.lsp.enable('jsonls')
