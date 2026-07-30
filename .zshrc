@@ -117,6 +117,10 @@ alias t=tmux
 alias k=kubectl
 alias c=clear
 
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases;
+fi
+
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 
 [[ ! -d ~/.pyenv/shims ]] || export PATH=$HOME/.pyenv/shims:$PATH
