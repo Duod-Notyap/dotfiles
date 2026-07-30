@@ -37,6 +37,7 @@ ln_ask () {
 
 setup_bash () {
     ln_ask $DOTFILES_DIR/.bashrc $HOME/.bashrc
+    ln_ask $DOTFILES_DIR/.bash_aliases $HOME/.bash_aliases
     return 0
 }
 
@@ -116,16 +117,8 @@ install_p10k () {
     git clone --depth=1 $P10K_GIT $P10K_INSTALL
 }
 
-setup_rustup () {
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    mkdir -p ~/.local/bin
-    curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
-    chmod +x ~/.local/bin/rust-analyzer
-}
-
 
 setup_bash
 setup_tmux
 setup_nvim
 setup_zsh
-setup_rustup
