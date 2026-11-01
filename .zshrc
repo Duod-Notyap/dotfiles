@@ -127,9 +127,9 @@ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 [[ ! -d ~/.pyenv/bin ]] || export PATH=$HOME/.pyenv/bin:$PATH
 
 # Go
-export GOPATH=$HOME/.local/share/go
-[[ ! -d $HOME/.local/bin/go ]] || export PATH=$PATH:$HOME/.local/bin/go/bin
-[[ ! -d $GOPATH ]] || export PATH=$PATH:$GOPATH/bin
+export GOROOT=$HOME/.local/share/go
+export GOPATH=$GOROOT/bin
+if [[ -d $GOPATH ]]; then export PATH=$PATH:$GOPATH:$GOPATH/bin; fi
 
 [[ ! -f ~/.kube/completion.zsh.inc ]] || source ~/.kube/completion.zsh.inc
 eval "$(zoxide init zsh --cmd z)"
@@ -155,3 +155,7 @@ export KREW_HOME="${KREW_ROOT:-$HOME/.krew}/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/dotfiles/.p10k.zsh.
 [[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
+
+if [[ -f ~/.zshrc.env ]]; then
+    source ~/.zshrc.env
+fi

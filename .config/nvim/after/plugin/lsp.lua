@@ -1,3 +1,5 @@
+require("lspconfig")
+
 require("hover").config {
     providers = {
         "hover.providers.lsp",
@@ -177,6 +179,21 @@ vim.lsp.config.eslint = {}
 
 vim.lsp.config.jsonls = {}
 vim.lsp.enable('jsonls')
+
+local gdscript_server = '127.0.0.1'
+if os.getenv("WSLENV") ~= nil then
+    local handle = io.popen("bash -c 'ip route show | grep default | awk '\"'\"'{print $3}'\"'\"' | tr -d \"\\n\"'")
+    local result = handle:read("*a")
+    handle:close()
+    gdscript_server = result
+end
+
+vim.lsp.config.gdscript = {
+    cmd = { "godot-wsl-lsp", "--host", gdscript_server },
+    filetypes = { "gdscript" }
+}
+vim.lsp.enable('gdscript')
+
 
 -- HTML LSP's
 
