@@ -126,6 +126,18 @@ vim.lsp.config.ts_ls = {
 vim.lsp.enable('ts_ls')
 
 
+-- vim.lsp.config.tsc = {
+--     cmd = { "npx", "tsc", "--lsp", "--stdio" },
+--     filetypes = {
+--         "typescript",
+--         "typescriptreact",
+--         "javascript",
+--         "javascriptreact"
+--     }
+-- }
+-- vim.lsp.enable("tsc")
+
+
 vim.lsp.config.rust_analyzer = {
     capabilities = cmpCapabilities,
     settings = {

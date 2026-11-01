@@ -159,3 +159,7 @@ export KREW_HOME="${KREW_ROOT:-$HOME/.krew}/bin"
 if [[ -f ~/.zshrc.env ]]; then
     source ~/.zshrc.env
 fi
+
+if [[ -d ~/.dotnet/tools ]]; then
+    export PATH=$PATH:~/.dotnet/tools
+fi

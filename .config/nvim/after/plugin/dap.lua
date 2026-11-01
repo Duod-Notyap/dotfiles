@@ -117,17 +117,7 @@ dap.configurations.rust = {
 dap.configurations.javascript = require("after.plugin.dap-configs.node").configs
 
 require('dap-go').setup({
-  dap_configurations = {
-      {
-          type = "go",
-          name = "Execute Precompiled",
-          request = "launch",
-          mode = "exec",
-          program = function()
-              return vim.fn.input("Executable: ", vim.fn.getcwd() .. '/', 'file')
-          end,
-      },
-  },
+  dap_configurations = require("after.plugin.dap-configs.go"),
   delve = {
       path = "dlv",
       initialize_timeout_sec = 20,
